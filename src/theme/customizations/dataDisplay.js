@@ -13,7 +13,7 @@ export const dataDisplayCustomizations = {
         padding: "8px",
         display: "flex",
         flexDirection: "column",
-        gap: 0,
+        gap: 4,
       },
     },
   },
@@ -30,7 +30,6 @@ export const dataDisplayCustomizations = {
         },
         [`& .${buttonBaseClasses.root}`]: {
           display: "flex",
-          gap: 8,
           padding: "2px 8px",
           borderRadius: theme.shape.borderRadius,
           opacity: 0.7,

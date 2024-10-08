@@ -14,6 +14,9 @@ const styles = {
   layout: {
     display: "flex",
   },
+  content: {
+    flexGrow: 1,
+  },
 };
 
 export default Layout;

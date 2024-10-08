@@ -224,7 +224,8 @@ export const inputsCustomizations = {
       }),
     },
   },
-  MuiIconButton: {
+  // !! Not needed
+  MuiIconButton1: {
     styleOverrides: {
       root: ({ theme }) => ({
         boxShadow: "none",
@@ -332,8 +333,9 @@ export const inputsCustomizations = {
         borderRadius: 5,
         border: "1px solid ",
         borderColor: alpha(gray[300], 0.8),
-        boxShadow: "0 0 0 1.5px hsla(210, 0%, 0%, 0.04) inset",
-        backgroundColor: alpha(gray[100], 0.4),
+        // boxShadow: "0 0 0 1.5px hsla(210, 0%, 0%, 0.04) inset",
+        // backgroundColor: alpha(gray[100], 0.4),
+        backgroundColor: theme.palette.background.default, // Match background
         transition: "border-color, background-color, 120ms ease-in",
         "&:hover": {
           borderColor: brand[300],
@@ -397,7 +399,6 @@ export const inputsCustomizations = {
           borderColor: gray[400],
         },
         [`&.${outlinedInputClasses.focused}`]: {
-          // outline: `3px solid ${alpha(brand[500], 0.5)}`,
           borderColor: brand[400],
         },
         ...theme.applyStyles("dark", {
@@ -405,24 +406,6 @@ export const inputsCustomizations = {
             borderColor: gray[500],
           },
         }),
-        variants: [
-          {
-            props: {
-              size: "small",
-            },
-            style: {
-              height: "2.25rem",
-            },
-          },
-          {
-            props: {
-              size: "medium",
-            },
-            style: {
-              height: "2.5rem",
-            },
-          },
-        ],
       }),
       notchedOutline: {
         border: "none",

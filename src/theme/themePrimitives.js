@@ -70,6 +70,8 @@ export const red = {
   900: "hsl(0, 93%, 6%)",
 };
 
+// opacity:0.7;color:hsl(220, 20%, 42%);
+
 export const getDesignTokens = (mode) => {
   customShadows[1] =
     mode === "dark"
@@ -138,8 +140,9 @@ export const getDesignTokens = (mode) => {
       },
       divider: mode === "dark" ? alpha(gray[700], 0.6) : alpha(gray[300], 0.4),
       background: {
-        default: "hsl(0, 0%, 99%)",
-        paper: "hsl(220, 35%, 97%)",
+        // default: "hsl(0, 0%, 99%)",
+        default: "white",
+        // paper: "hsl(220, 35%, 97%)",
         ...(mode === "dark" && {
           default: gray[900],
           paper: "hsl(220, 30%, 7%)",
@@ -161,6 +164,9 @@ export const getDesignTokens = (mode) => {
           hover: alpha(gray[600], 0.2),
           selected: alpha(gray[600], 0.3),
         }),
+      },
+      icon: {
+        light: "rgb(160 160 171)",
       },
     },
     typography: {
@@ -210,6 +216,21 @@ export const getDesignTokens = (mode) => {
       caption: {
         fontSize: defaultTheme.typography.pxToRem(12),
         fontWeight: 400,
+      },
+      candidateName: {
+        fontSize: defaultTheme.typography.pxToRem(16),
+        fontWeight: 600,
+      },
+      placeholderText: {
+        // fontSize: "1rem",
+        color: gray[500],
+        opacity: 0.7,
+      },
+      lightText: {
+        // fontSize: "1rem",
+        fontSize: defaultTheme.typography.pxToRem(12),
+        color: "rgb(112 112 123)",
+        opacity: 0.7,
       },
     },
     shape: {

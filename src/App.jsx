@@ -6,6 +6,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SavedSearchesPage from "./pages/SavedSearchesPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme/theme";
+import "./App.css";
 
 const App = () => {
   const theme = createTheme(getTheme("light"));
