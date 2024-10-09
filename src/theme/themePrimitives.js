@@ -167,6 +167,8 @@ export const getDesignTokens = (mode) => {
       },
       icon: {
         light: "rgb(160 160 171)",
+        dark: "rgb(112 112 123)",
+        backgroundLight: "rgb(244 244 245)",
       },
     },
     typography: {
@@ -212,6 +214,8 @@ export const getDesignTokens = (mode) => {
       body2: {
         fontSize: defaultTheme.typography.pxToRem(14),
         fontWeight: 400,
+        // color: "rgb(24, 24, 27)",
+        color: gray[900],
       },
       caption: {
         fontSize: defaultTheme.typography.pxToRem(12),
