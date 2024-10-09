@@ -231,7 +231,6 @@ export const getDesignTokens = (mode) => {
         opacity: 0.7,
       },
       lightText: {
-        // fontSize: "1rem",
         fontSize: defaultTheme.typography.pxToRem(12),
         color: "rgb(112 112 123)",
         opacity: 0.7,

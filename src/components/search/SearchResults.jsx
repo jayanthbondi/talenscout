@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import CandidateList from "./CandidateList";
 
 export default function SearchResults() {
@@ -6,7 +7,9 @@ export default function SearchResults() {
       <div
         style={{ height: "56px", borderBottom: "1px solid rgb(228, 228, 231)" }}
       ></div>
-      <CandidateList />
+      <Box sx={{ height: "calc(100vh - 56px)", overflowY: "scroll" }}>
+        <CandidateList />
+      </Box>
     </div>
   );
 }

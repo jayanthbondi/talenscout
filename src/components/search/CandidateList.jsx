@@ -6,7 +6,6 @@ import {
   Button,
   Grid,
   Checkbox,
-  Link,
   Divider,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
@@ -22,81 +21,60 @@ import CodeIcon from "@mui/icons-material/Code"; // Use CodeIcon for skills
 import { useState } from "react";
 
 // Sample candidate data
-const sampleData = {
-  profiles: {
-    "https://linkedin.com/in/at-JqjtXv": {
-      full_name: "Llewellyn Ruecker",
-      title: "Research Assistant",
-      headline: "Research Assistant at Legros, Smitham and Kessler",
-      company: {
-        name: "Legros, Smitham and Kessler",
-        url: "https://www.linkedin.com/company/legros-smitham-and-kessler",
-        domain: "legros.com",
-      },
-      location: "Faheybury, United States",
-      experience: [
-        "Research Assistant at Legros, Smitham and Kessler in 2014 - Present",
-        "Assistant at XYZ in 2013 - 2014",
-        "Test Practitioner at XYZ Corp in 2015 - 2018",
-      ],
-      education: ["Doctorate Degree at Vertapple University in 2017 - 2021"],
-      skills: ["Research", "Algorithms", "Budget Planning"],
-      profile_picture_url:
-        "https://images.contactout.com/profiles/7fe492925c1911244c7110c5ea9e66c4",
-      contact_availability: {
-        personal_email: true,
-        work_email: true,
-        phone: true,
-      },
-      contact_info: {
-        emails: ["test@gmail.com", "email1@example.com"],
-        phones: ["+123456789"],
-      },
-      social_profiles: {
-        linkedin: "https://linkedin.com/in/at-JqjtXv",
-        github: "https://github.com/at-JqjtXv",
-        twitter: "https://twitter.com/at-JqjtXv",
-        facebook: "https://facebook.com/at-JqjtXv",
-      },
-    },
-    "https://linkedin.com/in/maxime-IX12tS": {
-      full_name: "Maxime Bernier",
-      title: "Software Engineer",
-      location: "New York, United States",
-      experience: [
-        "Software Engineer at ABC Corp in 2018 - Present",
-        "NLP Practitioner at XYZ Corp in 2015 - 2018",
-        "Test Practitioner at XYZ Corp in 2015 - 2018",
-      ],
-      education: [
-        "Bachelor's Degree at XYZ University in 2013 - 2017",
-        "Bachelor's Degree at XYZ University in 2013 - 2017",
-      ],
-      skills: ["Python", "Machine Learning", "Data Analysis"],
-      profile_picture_url:
-        "https://images.contactout.com/profiles/7fe492925c1911244c7110c5ea9e66c4",
-      contact_availability: {
-        personal_email: true,
-        work_email: false,
-        phone: true,
-      },
-      contact_info: {
-        emails: ["maxime@example.com"],
-        phones: ["+987654321"],
-      },
-      social_profiles: {
-        linkedin: "https://linkedin.com/in/maxime-IX12tS",
-        github: "https://github.com/maxime-IX12tS",
-        twitter: null,
-        facebook: null,
-      },
-    },
+const profileTemplate = {
+  full_name: "Llewellyn Ruecker",
+  title: "Research Assistant",
+  headline: "Research Assistant at Legros, Smitham and Kessler",
+  company: {
+    name: "Legros, Smitham and Kessler",
+    url: "https://www.linkedin.com/company/legros-smitham-and-kessler",
+    domain: "legros.com",
   },
+  location: "Faheybury, United States",
+  experience: [
+    "Research Assistant at Legros, Smitham and Kessler in 2014 - Present",
+    "Assistant at XYZ in 2013 - 2014",
+    "Test Practitioner at XYZ Corp in 2015 - 2018",
+  ],
+  education: ["Doctorate Degree at Vertapple University in 2017 - 2021"],
+  skills: ["Research", "Algorithms", "Budget Planning"],
+  profile_picture_url:
+    "https://images.contactout.com/profiles/7fe492925c1911244c7110c5ea9e66c4",
+  contact_availability: {
+    personal_email: true,
+    work_email: true,
+    phone: true,
+  },
+  contact_info: {
+    emails: ["test@gmail.com", "email1@example.com"],
+    phones: ["+123456789"],
+  },
+  social_profiles: {
+    linkedin: "https://linkedin.com/in/at-JqjtXv",
+    github: "https://github.com/at-JqjtXv",
+    twitter: "https://twitter.com/at-JqjtXv",
+    facebook: "https://facebook.com/at-JqjtXv",
+  },
+};
+
+// Duplicating the profile 10 times
+const sampleData = {
+  profiles: Object.fromEntries(
+    Array.from({ length: 10 }, (_, index) => [
+      `https://linkedin.com/in/at-JqjtXv-${index + 1}`,
+      {
+        ...profileTemplate,
+        social_profiles: {
+          ...profileTemplate.social_profiles,
+          linkedin: `https://linkedin.com/in/at-JqjtXv-${index + 1}`,
+        },
+      },
+    ])
+  ),
 };
 
 const CandidateList = () => {
   const candidates = Object.values(sampleData.profiles).slice(0, 10); // Extracting the first 10 candidates
-
   return (
     <Grid container>
       {candidates.map((candidate, index) => (
@@ -118,16 +96,16 @@ const CandidateCard = ({ candidate }) => {
       variant="outlined"
       sx={(theme) => ({
         display: "flex",
-        padding: 2,
+        padding: "8px",
         border: "none",
         borderRadius: 0,
         borderBottom: `1px solid ${theme.palette.divider}`,
       })}
     >
       <Box sx={{}}>
-        <Checkbox sx={{ mr: 0 }} />
+        <Checkbox sx={{ m: 0 }} />
       </Box>
-      <Box sx={{ flex: 16 }}>
+      <Box sx={{ flex: 1 }}>
         <CandidatePrimaryDetails candidate={candidate} />
         <CandidateSecondaryDetails
           candidate={candidate}
@@ -135,7 +113,16 @@ const CandidateCard = ({ candidate }) => {
           toggleExpand={toggleExpand}
         />
       </Box>
-      <Box sx={{ flex: 4 }}>
+      <Box>
+        <Divider
+          orientation="vertical"
+          sx={(theme) => ({
+            // height: "16px",
+            color: `${theme.palette.divider}`,
+          })}
+        />
+      </Box>
+      <Box sx={{ width: "280px" }}>
         <ContactInfo contactInfo={candidate.contact_info} />
       </Box>
     </Card>
@@ -165,7 +152,13 @@ const CandidatePrimaryDetails = ({ candidate }) => {
             />
             <SocialProfiles socialProfiles={candidate.social_profiles} />
           </Box>
-          <Divider orientation="vertical" sx={{ height: "16px" }} />
+          <Divider
+            orientation="vertical"
+            sx={(theme) => ({
+              height: "16px",
+              color: `${theme.palette.divider}`,
+            })}
+          />
           <LocationSection location={candidate.location} />
         </Box>
         {candidate.company ? (
@@ -276,9 +269,7 @@ const LocationSection = ({ location }) => {
           color: (theme) => theme.palette.icon.light,
         }}
       />
-      <Typography variant="lightText" color="lightText">
-        {location}
-      </Typography>
+      <Typography variant="lightText">{location}</Typography>
     </Box>
   );
 };
@@ -290,18 +281,14 @@ const ExperienceSection = ({ experience, expanded }) => {
         sx={{
           display: "flex",
           gap: 1,
-          color: (theme) => theme.palette.icon.dark,
+          color: (theme) => theme.palette.icon.light,
           backgroundColor: (theme) => theme.palette.icon.backgroundColor,
         }}
       >
-        <Box
-          width={32}
-          height={32}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          <WorkIcon sx={{ fontSize: "1rem", mt: "4px" }} />
+        <Box width={32} sx={{ display: "flex", justifyContent: "center" }}>
+          <WorkIcon sx={{ fontSize: "1rem" }} />
         </Box>
-        <Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           {expanded
             ? experience.map((exp, i) => (
                 <Typography key={i} variant="body2">
@@ -326,18 +313,14 @@ const EducationSection = ({ education, expanded }) => {
         sx={{
           display: "flex",
           gap: 1,
-          color: (theme) => theme.palette.icon.dark,
+          color: (theme) => theme.palette.icon.light,
           backgroundColor: (theme) => theme.palette.icon.backgroundColor,
         }}
       >
-        <Box
-          width={32}
-          height={32}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
+        <Box width={32} sx={{ display: "flex", justifyContent: "center" }}>
           <SchoolIcon sx={{ fontSize: "1rem", mt: "1px" }} />
         </Box>
-        <Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           {expanded ? (
             education.map((edu) => (
               <Typography key={edu} variant="body2">
@@ -359,16 +342,13 @@ const SkillsSection = ({ skills }) => {
       <Box
         sx={{
           display: "flex",
+          alignItems: "center",
           gap: 1,
-          color: (theme) => theme.palette.icon.dark,
+          color: (theme) => theme.palette.icon.light,
           backgroundColor: (theme) => theme.palette.icon.backgroundColor,
         }}
       >
-        <Box
-          width={32}
-          height={32}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
+        <Box width={32} sx={{ display: "flex", justifyContent: "center" }}>
           <CodeIcon sx={{ fontSize: "1rem", mt: "1px" }} />
         </Box>
         <Box>
@@ -383,40 +363,101 @@ const SkillsSection = ({ skills }) => {
 
 const ContactInfo = ({ contactInfo }) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      <Box sx={{ display: "flex", flexDirection: "column", mb: 1 }}>
-        {contactInfo.emails.map((email, i) => (
-          <Box key={i} sx={{ display: "flex", alignItems: "center" }}>
-            <EmailIcon sx={{ fontSize: 16, mr: 1 }} />
-            <Typography variant="body2" color="textSecondary">
-              {email}
-            </Typography>
-            <Button sx={{ ml: 1 }} size="small">
-              View email
-            </Button>
-          </Box>
-        ))}
-        {contactInfo.phones.map((phone, i) => (
-          <Box key={i} sx={{ display: "flex", alignItems: "center" }}>
-            <PhoneIcon sx={{ fontSize: 16, mr: 1 }} />
-            <Typography variant="body2" color="textSecondary">
-              {phone}
-            </Typography>
-            <Button sx={{ ml: 1 }} size="small">
-              Find phone
-            </Button>
-          </Box>
-        ))}
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            width: "200px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+          {contactInfo.emails.map((email, i) => (
+            <Box
+              key={i}
+              sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  color: (theme) => theme.palette.icon.light,
+                  backgroundColor: (theme) =>
+                    theme.palette.icon.backgroundColor,
+                }}
+              >
+                <EmailIcon sx={{ fontSize: "1rem" }} />
+              </Box>
+              <Typography variant="body2">{email}</Typography>
+              <Box
+                sx={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: (theme) => theme.palette.success.main,
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
+        <Box
+          sx={{
+            padding: 0,
+            textTransform: "none",
+            cursor: "pointer",
+            color: "primary.main",
+            fontSize: "0.8rem",
+            fontWeight: 500,
+            textDecoration: "underline",
+          }}
+        >
+          View email
+        </Box>
       </Box>
-      {/* <Button variant="outlined" sx={{ width: "100%", textTransform: "none" }}>
-        AI write personalized message
-      </Button> */}
+
+      <Box sx={{ display: "flex" }}>
+        <Box sx={{ width: "200px" }}>
+          {contactInfo.phones.map((phone, i) => (
+            <Box
+              key={i}
+              sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  color: (theme) => theme.palette.icon.light,
+                  backgroundColor: (theme) =>
+                    theme.palette.icon.backgroundColor,
+                }}
+              >
+                <PhoneIcon sx={{ fontSize: 16 }} />
+              </Box>
+              <Typography variant="body2">{phone}</Typography>
+              <Box
+                sx={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: (theme) => theme.palette.success.main,
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
+        <Box
+          sx={{
+            padding: 0,
+            textTransform: "none",
+            cursor: "pointer",
+            color: "primary.main",
+            fontSize: "0.8rem",
+            fontWeight: 500,
+            textDecoration: "underline",
+          }}
+        >
+          Find Phone
+        </Box>
+      </Box>
     </Box>
   );
 };

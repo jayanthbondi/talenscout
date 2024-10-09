@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemIcon } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import {
   Search,
   Collections,
@@ -7,107 +7,131 @@ import {
   ExitToApp,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import MuiDrawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useTheme } from "@mui/material/styles";
 
-// Todo Set the font sizes
+const drawerWidth = 140;
 
 const Sidebar = () => {
+  const [open, setOpen] = useState(true); // By default expanded
+  const theme = useTheme();
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
   return (
-    <div style={styles.sidebar}>
+    <MuiDrawer
+      variant="permanent"
+      open={open}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: "nowrap",
+        ...(open && {
+          width: drawerWidth,
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            transition: theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+          },
+        }),
+        ...(!open && {
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          overflowX: "hidden",
+          width: `calc(${theme.spacing(7)} + 1px)`,
+          "& .MuiDrawer-paper": {
+            width: `calc(${theme.spacing(7)} + 1px)`,
+            transition: theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.leavingScreen,
+            }),
+          },
+        }),
+      }}
+    >
+      <IconButton
+        onClick={toggleDrawer}
+        sx={{ alignSelf: "center", marginTop: "10px" }}
+      >
+        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>
       <List>
         <ListItem
           button
           component={Link}
           to="/search"
-          sx={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
+          sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
-          <ListItemIcon sx={{ minWidth: "unset" }}>
-            <Search style={{ fontSize: 400 }} /> {/* Forced font size */}
+          <ListItemIcon>
+            <Search sx={{ fontSize: 30 }} />
           </ListItemIcon>
+          {open && <ListItemText primary="Search" />}
         </ListItem>
 
         <ListItem
           button
           component={Link}
           to="/collection"
-          sx={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
+          sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <Collections sx={{ fontSize: 30 }} /> {/* Increased font size */}
+            <Collections sx={{ fontSize: 30 }} />
           </ListItemIcon>
+          {open && <ListItemText primary="Collections" />}
         </ListItem>
 
         <ListItem
           button
           component={Link}
           to="/profile"
-          sx={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
+          sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <Person fontSize="medium" sx={{ fontSize: 30 }} />{" "}
-            {/* Increased font size */}
+            <Person sx={{ fontSize: 30 }} />
           </ListItemIcon>
+          {open && <ListItemText primary="Profile" />}
         </ListItem>
 
         <ListItem
           button
           component={Link}
           to="/saved-searches"
-          sx={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
+          sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <Bookmark sx={{ fontSize: 30 }} /> {/* Increased font size */}
+            <Bookmark sx={{ fontSize: 30 }} />
           </ListItemIcon>
+          {open && <ListItemText primary="Saved" />}
         </ListItem>
 
         <ListItem
           button
           component={Link}
           to="/logout"
-          sx={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
+          sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <ExitToApp fontSize="medium" /> {/* Increased font size */}
+            <ExitToApp sx={{ fontSize: 30 }} />
           </ListItemIcon>
+          {open && <ListItemText primary="Logout" />}
         </ListItem>
       </List>
-    </div>
+    </MuiDrawer>
   );
-};
-
-const styles = {
-  sidebar: {
-    width: "50px",
-    height: "100vh",
-    padding: "0px",
-    top: 0,
-    left: 0,
-    borderRight: "1px solid rgb(228 228 231)",
-  },
 };
 
 export default Sidebar;
