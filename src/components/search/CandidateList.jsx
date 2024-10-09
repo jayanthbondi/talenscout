@@ -124,83 +124,91 @@ const CandidateCard = ({ candidate }) => {
         borderBottom: `1px solid ${theme.palette.divider}`,
       })}
     >
-      {/* Left Side: Avatar and Checkbox */}
-      <Box sx={{ display: "flex", gap: "10px" }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            alignSelf: "flex-start",
-          }}
-        >
-          <Checkbox />
-          <Avatar
-            alt={candidate.full_name}
-            src={candidate.profile_picture_url}
-            sx={{ width: 32, height: 32 }}
-          />
-        </Box>
-        <Box sx={{}}>
-          <Box sx={{ display: "flex", gap: "6px", alignItems: "center" }}>
-            <Box sx={{ display: "flex", gap: "6px", alignItems: "center" }}>
-              <Typography variant="candidateName">
-                {candidate.full_name}
-              </Typography>
-              <Divider
-                orientation="vertical"
-                sx={(theme) => ({
-                  height: "16px",
-                  color: `${theme.palette.divider}`,
-                })}
-              />
-              <SocialProfiles socialProfiles={candidate.social_profiles} />
-            </Box>
-
-            {/* Vertical Divider */}
-            <Divider orientation="vertical" sx={{ height: "16px" }} />
-
-            <LocationSection location={candidate.location} />
-          </Box>
-          {candidate.company && (
-            <Typography variant="body2" color="textSecondary">
-              {candidate.company.name} - {candidate.company.domain}
-            </Typography>
-          )}
-        </Box>
+      <Box sx={{}}>
+        <Checkbox sx={{ mr: 0 }} />
       </Box>
-
-      <Box>
-        <Box
-          sx={{ mt: 0.6, display: "flex", flexDirection: "column", gap: "5px" }}
-        >
-          <ExperienceSection
-            experience={candidate.experience}
-            expanded={expanded}
-          />
-          <EducationSection
-            education={candidate.education}
-            expanded={expanded}
-          />
-          {expanded ? (
-            <SkillsSection skills={candidate.skills} expanded={expanded} />
-          ) : null}
-        </Box>
-        <Box
-          onClick={toggleExpand}
-          sx={{
-            padding: 0,
-            textTransform: "none",
-            cursor: "pointer",
-            color: "primary.main",
-          }}
-        >
-          {expanded ? "Show less" : "...more"}
-        </Box>
+      <Box sx={{ flex: 16 }}>
+        <CandidatePrimaryDetails candidate={candidate} />
+        <CandidateSecondaryDetails
+          candidate={candidate}
+          expanded={expanded}
+          toggleExpand={toggleExpand}
+        />
       </Box>
-
-      {/* Contact Info */}
-      <ContactInfo contactInfo={candidate.contact_info} />
+      <Box sx={{ flex: 4 }}>
+        <ContactInfo contactInfo={candidate.contact_info} />
+      </Box>
     </Card>
+  );
+};
+
+const CandidatePrimaryDetails = ({ candidate }) => {
+  return (
+    <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+      <Avatar
+        alt={candidate.full_name}
+        src={candidate.profile_picture_url}
+        sx={{ width: 32, height: 32 }}
+      />
+      <Box>
+        <Box sx={{ display: "flex", gap: "6px", alignItems: "center" }}>
+          <Box sx={{ display: "flex", gap: "6px", alignItems: "center" }}>
+            <Typography variant="candidateName">
+              {candidate.full_name}
+            </Typography>
+            <Divider
+              orientation="vertical"
+              sx={(theme) => ({
+                height: "16px",
+                color: `${theme.palette.divider}`,
+              })}
+            />
+            <SocialProfiles socialProfiles={candidate.social_profiles} />
+          </Box>
+          <Divider orientation="vertical" sx={{ height: "16px" }} />
+          <LocationSection location={candidate.location} />
+        </Box>
+        {candidate.company ? (
+          <Typography variant="body2" color="textSecondary">
+            {candidate.company.name} - {candidate.company.domain}
+          </Typography>
+        ) : null}
+      </Box>
+    </Box>
+  );
+};
+
+const CandidateSecondaryDetails = ({ candidate, expanded, toggleExpand }) => {
+  return (
+    <Box sx={{ mt: 0.6 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
+        <ExperienceSection
+          experience={candidate.experience}
+          expanded={expanded}
+        />
+        <EducationSection education={candidate.education} expanded={expanded} />
+        {expanded ? (
+          <SkillsSection skills={candidate.skills} expanded={expanded} />
+        ) : null}
+      </Box>
+      <Box
+        onClick={toggleExpand}
+        sx={{
+          padding: 0,
+          textTransform: "none",
+          cursor: "pointer",
+          color: "primary.main",
+        }}
+      >
+        {expanded ? "Show less" : "...more"}
+      </Box>
+    </Box>
   );
 };
 
@@ -286,7 +294,13 @@ const ExperienceSection = ({ experience, expanded }) => {
           backgroundColor: (theme) => theme.palette.icon.backgroundColor,
         }}
       >
-        <WorkIcon sx={{ fontSize: "0.75rem", mt: "4px" }} />
+        <Box
+          width={32}
+          height={32}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          <WorkIcon sx={{ fontSize: "1rem", mt: "4px" }} />
+        </Box>
         <Box>
           {expanded
             ? experience.map((exp, i) => (
@@ -316,7 +330,13 @@ const EducationSection = ({ education, expanded }) => {
           backgroundColor: (theme) => theme.palette.icon.backgroundColor,
         }}
       >
-        <SchoolIcon sx={{ fontSize: "0.75rem", mt: "4px" }} />
+        <Box
+          width={32}
+          height={32}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          <SchoolIcon sx={{ fontSize: "1rem", mt: "1px" }} />
+        </Box>
         <Box>
           {expanded ? (
             education.map((edu) => (
@@ -333,22 +353,29 @@ const EducationSection = ({ education, expanded }) => {
   );
 };
 
-const SkillsSection = ({ skills, expanded }) => {
+const SkillsSection = ({ skills }) => {
   return (
     <Box>
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
           gap: 1,
           color: (theme) => theme.palette.icon.dark,
           backgroundColor: (theme) => theme.palette.icon.backgroundColor,
         }}
       >
-        <CodeIcon sx={{ fontSize: "0.75rem" }} />
-        <Typography variant="body2">
-          {expanded ? skills.join(", ") : skills.slice(0, 3).join(", ")}
-        </Typography>
+        <Box
+          width={32}
+          height={32}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          <CodeIcon sx={{ fontSize: "1rem", mt: "1px" }} />
+        </Box>
+        <Box>
+          <Typography variant="body2" sx={{ display: "inline-block" }}>
+            {skills.join(", ")}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
