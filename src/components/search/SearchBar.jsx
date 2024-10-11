@@ -19,6 +19,9 @@ import {
   genderOptions,
 } from "./Constants";
 import { useState } from "react";
+import SearchBarHeader from "./SearchBarHeader";
+import { SearchOutlined } from "@mui/icons-material";
+import SearchBarFooter from "./SearchBarFooter";
 
 const SearchBar = () => {
   // State for various multi-select fields
@@ -41,6 +44,16 @@ const SearchBar = () => {
         borderRight: "1px solid rgb(228, 228, 231)",
       }}
     >
+      <Box
+        sx={{
+          height: "56px",
+          borderBottom: "1px solid rgb(228, 228, 231)",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <SearchBarHeader />
+      </Box>
       <Box sx={styles.container}>
         {/* Name */}
         <FormControl
@@ -112,6 +125,17 @@ const SearchBar = () => {
           </Box>
         </Box>
 
+        {/* Skills */}
+        <FormControl
+          fullWidth
+          sx={styles.input}
+          variant="outlined"
+          size="small"
+        >
+          <Typography sx={styles.label}>Skills</Typography>
+          <OutlinedInput placeholder="e.g. PHP" />
+        </FormControl>
+
         {/* Company Size and Current/Past Dropdown */}
         <Box sx={{ position: "relative" }}>
           <FormControl fullWidth variant="outlined" size="small">
@@ -130,17 +154,6 @@ const SearchBar = () => {
             />
           </Box>
         </Box>
-
-        {/* Skills */}
-        <FormControl
-          fullWidth
-          sx={styles.input}
-          variant="outlined"
-          size="small"
-        >
-          <Typography sx={styles.label}>Skills</Typography>
-          <OutlinedInput placeholder="e.g. PHP" />
-        </FormControl>
 
         {/* Industry (MultiSelect) */}
         <FormControl
@@ -203,15 +216,10 @@ const SearchBar = () => {
 
         {/* Search Button */}
       </Box>
-      <Box sx={{ padding: "20px", borderTop: "1px solid rgb(228, 228, 231)" }}>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={styles.searchButton}
-        >
-          Search
-        </Button>
+      <Box
+        sx={{ padding: "15px 15px", borderTop: "1px solid rgb(228, 228, 231)" }}
+      >
+        <SearchBarFooter />
       </Box>
     </Box>
   );
@@ -222,7 +230,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "6px",
-    height: "calc(100vh - 100px)",
+    height: "calc(100vh - 100px - 66px)",
     width: "320px",
     padding: "10px",
     overflowY: "auto",

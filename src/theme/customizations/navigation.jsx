@@ -52,6 +52,7 @@ export const navigationCustomizations = {
       // }),
     },
   },
+
   MuiSelect1: {
     defaultProps: {
       IconComponent: KeyboardArrowDownRoundedIcon, // Set the custom dropdown icon globally
@@ -153,9 +154,9 @@ export const navigationCustomizations = {
     styleOverrides: {
       root: { minHeight: "fit-content" },
       indicator: ({ theme }) => ({
-        backgroundColor: theme.palette.grey[800],
+        // backgroundColor: theme.palette.grey[800],
         ...theme.applyStyles("dark", {
-          backgroundColor: theme.palette.grey[200],
+          // backgroundColor: theme.palette.grey[200],
         }),
       }),
     },
@@ -168,26 +169,26 @@ export const navigationCustomizations = {
         textTransform: "none",
         minWidth: "fit-content",
         minHeight: "fit-content",
-        color: theme.palette.text.secondary,
+        // color: theme.palette.text.secondary,
         borderRadius: theme.shape.borderRadius,
         border: "1px solid",
         borderColor: "transparent",
         ":hover": {
-          color: theme.palette.text.primary,
-          backgroundColor: gray[100],
-          borderColor: gray[200],
+          // color: theme.palette.text.primary,
+          // backgroundColor: gray[100],
+          // borderColor: gray[200],
         },
         [`&.${tabClasses.selected}`]: {
-          color: gray[900],
+          // color: gray[900],
         },
         ...theme.applyStyles("dark", {
           ":hover": {
-            color: theme.palette.text.primary,
-            backgroundColor: gray[800],
-            borderColor: gray[700],
+            // color: theme.palette.text.primary,
+            // backgroundColor: gray[800],
+            // borderColor: gray[700],
           },
           [`&.${tabClasses.selected}`]: {
-            color: "#fff",
+            // color: "#fff",
           },
         }),
       }),

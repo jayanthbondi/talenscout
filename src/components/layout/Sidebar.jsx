@@ -77,9 +77,11 @@ const Sidebar = () => {
           sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <Search sx={{ fontSize: 30 }} />
+            <Search sx={{ fontSize: 30 }} color="primary1" />
           </ListItemIcon>
-          {open && <ListItemText primary="Search" />}
+          {open && (
+            <ListItemText primary="Search" sx={{ color: "primary.main" }} />
+          )}
         </ListItem>
 
         <ListItem
@@ -89,9 +91,14 @@ const Sidebar = () => {
           sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <Collections sx={{ fontSize: 30 }} />
+            <Collections sx={{ fontSize: 30 }} color="primary1" />
           </ListItemIcon>
-          {open && <ListItemText primary="Collections" />}
+          {open && (
+            <ListItemText
+              primary="Collections"
+              sx={{ color: "primary.main" }}
+            />
+          )}
         </ListItem>
 
         <ListItem
@@ -100,10 +107,16 @@ const Sidebar = () => {
           to="/profile"
           sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
-          <ListItemIcon>
-            <Person sx={{ fontSize: 30 }} />
+          <ListItemIcon fontSize="200px">
+            <Person
+              sx={{ fontSize: "30px" }}
+              color="primary1"
+              fontSize="20px"
+            />
           </ListItemIcon>
-          {open && <ListItemText primary="Profile" />}
+          {open && (
+            <ListItemText primary="Profile" sx={{ color: "primary.main" }} />
+          )}
         </ListItem>
 
         <ListItem
@@ -113,9 +126,11 @@ const Sidebar = () => {
           sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <Bookmark sx={{ fontSize: 30 }} />
+            <Bookmark sx={{ fontSize: 30 }} color="primary1" />
           </ListItemIcon>
-          {open && <ListItemText primary="Saved" />}
+          {open && (
+            <ListItemText primary="Saved" sx={{ color: "primary.main" }} />
+          )}
         </ListItem>
 
         <ListItem
@@ -125,9 +140,11 @@ const Sidebar = () => {
           sx={{ display: "flex", gap: "10px", padding: "8px 8px" }}
         >
           <ListItemIcon>
-            <ExitToApp sx={{ fontSize: 30 }} />
+            <ExitToApp sx={{ fontSize: 30 }} color="primary1" />
           </ListItemIcon>
-          {open && <ListItemText primary="Logout" />}
+          {open && (
+            <ListItemText primary="Logout" sx={{ color: "primary.main" }} />
+          )}
         </ListItem>
       </List>
     </MuiDrawer>

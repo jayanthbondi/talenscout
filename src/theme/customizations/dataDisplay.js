@@ -23,7 +23,7 @@ export const dataDisplayCustomizations = {
         [`& .${svgIconClasses.root}`]: {
           width: "1rem",
           height: "1rem",
-          color: theme.palette.text.secondary,
+          // color: theme.palette.text.secondary,
         },
         [`& .${typographyClasses.root}`]: {
           fontWeight: 500,
@@ -35,15 +35,16 @@ export const dataDisplayCustomizations = {
           opacity: 0.7,
           "&.Mui-selected": {
             opacity: 1,
-            backgroundColor: alpha(theme.palette.action.selected, 0.3),
-            [`& .${svgIconClasses.root}`]: {
-              color: theme.palette.text.primary,
-            },
-            "&:focus-visible": {
-              backgroundColor: alpha(theme.palette.action.selected, 0.3),
-            },
+            // backgroundColor: alpha(theme.palette.action.selected, 0.3),
+            // [`& .${svgIconClasses.root}`]: {
+            //   color: theme.palette.text.primary,
+            // },
+            // "&:focus-visible": {
+            //   backgroundColor: alpha(theme.palette.action.selected, 0.3),
+            // },
             "&:hover": {
-              backgroundColor: alpha(theme.palette.action.selected, 0.5),
+              // backgroundColor: alpha(theme.palette.action.selected, 0.5),
+              // backgroundColor: "red",
             },
           },
           "&:focus-visible": {
