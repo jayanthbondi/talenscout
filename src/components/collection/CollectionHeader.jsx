@@ -18,28 +18,28 @@ import { SearchOutlined, Add, Close } from "@mui/icons-material";
 
 export default function CollectionHeader() {
   const [activeTab, setActiveTab] = useState(0);
-  const [openCreateList, setOpenCreateList] = useState(false); // State to control modal visibility
-  const [showSnackbar, setShowSnackbar] = useState(false); // State to control snackbar visibility
+  const [openCreateList, setOpenCreateList] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
 
   const handleOpenCreateList = () => {
-    setOpenCreateList(true); // Open modal
+    setOpenCreateList(true);
   };
 
   const handleCloseCreateList = () => {
-    setOpenCreateList(false); // Close modal
+    setOpenCreateList(false);
   };
 
   const handleCreateList = () => {
-    setOpenCreateList(false); // Close modal
-    setShowSnackbar(true); // Show success alert
+    setOpenCreateList(false);
+    setShowSnackbar(true);
   };
 
   const handleCloseSnackbar = () => {
-    setShowSnackbar(false); // Hide snackbar after timeout or close
+    setShowSnackbar(false);
   };
 
   return (
@@ -57,8 +57,8 @@ export default function CollectionHeader() {
         aria-label="Collection Tabs"
         TabIndicatorProps={{
           style: {
-            backgroundColor: "primary.main", // Set the indicator color
-            height: "2px", // Indicator thickness
+            backgroundColor: "primary.main",
+            height: "2px",
           },
         }}
         sx={{ alignSelf: "flex-end" }}
@@ -67,7 +67,7 @@ export default function CollectionHeader() {
           label="People Lists"
           sx={{
             textTransform: "none",
-            color: activeTab === 0 ? "primary.main" : "#9e9e9e", // Active vs Inactive
+            color: activeTab === 0 ? "primary.main" : "#9e9e9e",
             fontWeight: activeTab === 0 ? "bold" : "normal",
           }}
         />
@@ -75,7 +75,7 @@ export default function CollectionHeader() {
           label="Company Lists"
           sx={{
             textTransform: "none",
-            color: activeTab === 1 ? "primary.main" : "#9e9e9e", // Active vs Inactive
+            color: activeTab === 1 ? "primary.main" : "#9e9e9e",
             fontWeight: activeTab === 1 ? "bold" : "normal",
           }}
         />
@@ -106,7 +106,7 @@ export default function CollectionHeader() {
         <Button
           variant="contained"
           startIcon={<Add />}
-          onClick={handleOpenCreateList} // Open modal on click
+          onClick={handleOpenCreateList}
         >
           Create list
         </Button>
@@ -157,9 +157,9 @@ export default function CollectionHeader() {
       <Snackbar
         open={showSnackbar}
         // open
-        autoHideDuration={5000} // Hide after 3 seconds
+        autoHideDuration={5000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }} // Position the Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseSnackbar}
