@@ -14,9 +14,12 @@ import {
   jobTitles,
   industries,
   companySizes,
-  seniorityLevels,
   excludeLists,
   genderOptions,
+  yearsOfExperience,
+  yearsInCurrentRole,
+  locations,
+  educationLevels,
 } from "./Constants";
 import { useState } from "react";
 import SearchBarHeader from "./SearchBarHeader";
@@ -25,15 +28,21 @@ import SearchBarFooter from "./SearchBarFooter";
 
 const SearchBar = () => {
   // State for various multi-select fields
-  const [selectedSeniority, setSelectedSeniority] = useState([]);
+  const [selectedJobTitles, setSelectedJobTitles] = useState([]);
   const [selectedCompanySizes, setSelectedCompanySizes] = useState([]);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const [selectedExcludeList, setSelectedExcludeList] = useState([]);
   const [selectedGender, setSelectedGender] = useState([]);
+  const [selectedYearsExperience, setSelectedYearsExperience] = useState([]);
+  const [selectedYearsInCurrentRole, setSelectedYearsInCurrentRole] = useState(
+    []
+  );
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [selectedEducation, setSelectedEducation] = useState([]);
+  const [excludeJobTitles, setExcludeJobTitles] = useState([]);
 
   // Individual state for current/past dropdowns
   const [jobTitleCurrentPast, setJobTitleCurrentPast] = useState("current");
-  const [seniorityCurrentPast, setSeniorityCurrentPast] = useState("current");
   const [companyCurrentPast, setCompanyCurrentPast] = useState("current");
 
   return (
@@ -106,24 +115,7 @@ const SearchBar = () => {
           </Box>
         </Box>
 
-        {/* Seniority and Current/Past Dropdown */}
-        <Box sx={{ position: "relative" }}>
-          <FormControl fullWidth variant="outlined" size="small">
-            <Typography sx={styles.label}>Seniority</Typography>
-            <MultiSelect
-              options={seniorityLevels}
-              selectedValues={selectedSeniority}
-              setSelectedValues={setSelectedSeniority}
-              placeholder="Select seniority levels"
-            />
-          </FormControl>
-          <Box sx={{ position: "absolute", right: "0", top: "0" }}>
-            <CurrentPastSelect
-              currentPastValue={seniorityCurrentPast}
-              setCurrentPastValue={setSeniorityCurrentPast}
-            />
-          </Box>
-        </Box>
+        {/* Seniority (not supported) - Removed */}
 
         {/* Skills */}
         <FormControl
@@ -136,15 +128,80 @@ const SearchBar = () => {
           <OutlinedInput placeholder="e.g. PHP" />
         </FormControl>
 
-        {/* Company Size and Current/Past Dropdown */}
+        {/* Years in Current Role */}
+        <FormControl
+          fullWidth
+          sx={styles.input}
+          variant="outlined"
+          size="small"
+        >
+          <Typography sx={styles.label}>Years in Current Role</Typography>
+          <MultiSelect
+            options={yearsInCurrentRole}
+            selectedValues={selectedYearsInCurrentRole}
+            setSelectedValues={setSelectedYearsInCurrentRole}
+            placeholder="Select years in current role"
+          />
+        </FormControl>
+
+        {/* Total Years of Experience */}
+        <FormControl
+          fullWidth
+          sx={styles.input}
+          variant="outlined"
+          size="small"
+        >
+          <Typography sx={styles.label}>Total Years of Experience</Typography>
+          <MultiSelect
+            options={yearsOfExperience}
+            selectedValues={selectedYearsExperience}
+            setSelectedValues={setSelectedYearsExperience}
+            placeholder="Select experience range"
+          />
+        </FormControl>
+
+        {/* Location */}
+        <FormControl
+          fullWidth
+          sx={styles.input}
+          variant="outlined"
+          size="small"
+        >
+          <Typography sx={styles.label}>Location</Typography>
+          <MultiSelect
+            options={locations}
+            selectedValues={selectedLocation}
+            setSelectedValues={setSelectedLocation}
+            placeholder="Select location"
+          />
+        </FormControl>
+
+        {/* Company and Current/Past Dropdown */}
         <Box sx={{ position: "relative" }}>
           <FormControl fullWidth variant="outlined" size="small">
-            <Typography sx={styles.label}>Company size</Typography>
-            <MultiSelect
-              options={companySizes}
-              selectedValues={selectedCompanySizes}
-              setSelectedValues={setSelectedCompanySizes}
-              placeholder="Select company size"
+            <Typography sx={styles.label}>Company</Typography>
+            <Autocomplete
+              multiple
+              options={["IBM", "Google", "Meta"]}
+              freeSolo
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    key={option}
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="e.g. Google"
+                  size="small"
+                />
+              )}
             />
           </FormControl>
           <Box sx={{ position: "absolute", right: "0", top: "0" }}>
@@ -155,7 +212,18 @@ const SearchBar = () => {
           </Box>
         </Box>
 
-        {/* Industry (MultiSelect) */}
+        {/* Company Size */}
+        <FormControl fullWidth variant="outlined" size="small">
+          <Typography sx={styles.label}>Company size</Typography>
+          <MultiSelect
+            options={companySizes}
+            selectedValues={selectedCompanySizes}
+            setSelectedValues={setSelectedCompanySizes}
+            placeholder="Select company size"
+          />
+        </FormControl>
+
+        {/* Industry */}
         <FormControl
           fullWidth
           sx={styles.input}
@@ -171,7 +239,7 @@ const SearchBar = () => {
           />
         </FormControl>
 
-        {/* Exclude List (MultiSelect) */}
+        {/* Exclude List */}
         <FormControl
           fullWidth
           sx={styles.input}
@@ -187,7 +255,7 @@ const SearchBar = () => {
           />
         </FormControl>
 
-        {/* Gender (MultiSelect) */}
+        {/* Gender */}
         <FormControl
           fullWidth
           sx={styles.input}
@@ -211,7 +279,28 @@ const SearchBar = () => {
           size="small"
         >
           <Typography sx={styles.label}>Department</Typography>
-          <OutlinedInput placeholder="e.g. C Suite" />
+          <OutlinedInput placeholder="e.g. Sales" />
+        </FormControl>
+
+        <FormControl
+          fullWidth
+          sx={styles.input}
+          variant="outlined"
+          size="small"
+        >
+          <Typography sx={styles.label}>Keyword</Typography>
+          <OutlinedInput placeholder="e.g. Founder" />
+        </FormControl>
+
+        {/* School */}
+        <FormControl
+          fullWidth
+          sx={styles.input}
+          variant="outlined"
+          size="small"
+        >
+          <Typography sx={styles.label}>School/Degree</Typography>
+          <OutlinedInput placeholder="e.g. UC Berkely" />
         </FormControl>
 
         {/* Search Button */}
