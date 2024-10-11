@@ -33,21 +33,21 @@ export default function SearchBarHeader() {
           }}
         >
           <Tab
-            label="People"
+            label="Filters"
             sx={{
               textTransform: "none",
               color: selectedTab === 0 ? "primary.main" : "#9e9e9e", // Active vs Inactive
               fontWeight: selectedTab === 0 ? "bold" : "normal",
             }}
           />
-          {/* <Tab
-            label="Companies"
+          <Tab
+            label="LinkedIn URL"
             sx={{
               textTransform: "none",
               color: selectedTab === 1 ? "primary.main" : "#9e9e9e", // Active vs Inactive
               fontWeight: selectedTab === 1 ? "bold" : "normal",
             }}
-          /> */}
+          />
           {/* color: "primary.main", */}
         </Tabs>
       </Box>

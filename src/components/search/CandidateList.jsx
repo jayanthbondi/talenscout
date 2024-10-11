@@ -262,7 +262,7 @@ const SocialProfiles = ({ socialProfiles }) => {
 
 const LocationSection = ({ location }) => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
       <LocationOnIcon
         sx={{
           fontSize: "1rem",

@@ -17,13 +17,19 @@ const CurrentPastSelect = ({ currentPastValue, setCurrentPastValue }) => {
           boxShadow: "none", // No shadow
           "& fieldset": { border: "none" }, // Ensures border is removed in all states
           "& .MuiSelect-icon": {
-            fontSize: "1.2rem", // Adjust icon size (change as per need)
+            fontSize: "1rem", // Adjust icon size (change as per need)
           },
+          //   "& .MuiOutlinedInput-input": {
+          //     fontSize: "10px",
+          //   },
         }}
         size="small"
+        // fontSize="2px"
+        // variant="caption"
+        // component="span"
       >
         {currentPastOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option.value} fontSize="5px" value={option.value}>
             {option.label}
           </MenuItem>
         ))}

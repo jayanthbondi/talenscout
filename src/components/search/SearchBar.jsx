@@ -7,6 +7,8 @@ import {
   Box,
   Chip,
   TextField,
+  Checkbox,
+  Collapse,
 } from "@mui/material";
 import MultiSelect from "./MultiSelect";
 import CurrentPastSelect from "./CurrentPastSelect";
@@ -19,7 +21,6 @@ import {
   yearsOfExperience,
   yearsInCurrentRole,
   locations,
-  educationLevels,
 } from "./Constants";
 import { useState } from "react";
 import SearchBarHeader from "./SearchBarHeader";
@@ -40,6 +41,12 @@ const SearchBar = () => {
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedEducation, setSelectedEducation] = useState([]);
   const [excludeJobTitles, setExcludeJobTitles] = useState([]);
+
+  // Include related job titles state
+  const [includeRelatedTitles, setIncludeRelatedTitles] = useState(true);
+
+  // Exclude job titles collapse state
+  const [showExcludeJobTitles, setShowExcludeJobTitles] = useState(false);
 
   // Individual state for current/past dropdowns
   const [jobTitleCurrentPast, setJobTitleCurrentPast] = useState("current");
@@ -115,7 +122,95 @@ const SearchBar = () => {
           </Box>
         </Box>
 
-        {/* Seniority (not supported) - Removed */}
+        {/* Include related titles checkbox */}
+        <Box sx={styles.checkboxContainer}>
+          <FormControl
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Checkbox
+              checked={includeRelatedTitles}
+              sx={{ margin: "0px" }}
+              onChange={(e) => setIncludeRelatedTitles(e.target.checked)}
+            />
+            <Typography
+              variant="caption"
+              component="span"
+              sx={styles.checkboxLabel}
+            >
+              Include related titles
+            </Typography>
+          </FormControl>
+        </Box>
+
+        {/* Exclude job titles checkbox and collapse */}
+        <Box sx={styles.checkboxContainer}>
+          <FormControl
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Checkbox
+              checked={showExcludeJobTitles}
+              sx={{ margin: "0px" }}
+              onChange={(e) => setShowExcludeJobTitles(e.target.checked)}
+            />
+            <Typography
+              variant="caption"
+              component="span"
+              sx={styles.checkboxLabel}
+            >
+              Exclude job titles
+            </Typography>
+          </FormControl>
+        </Box>
+
+        {showExcludeJobTitles ? (
+          <Box sx={{}}>
+            <FormControl fullWidth variant="outlined" size="small">
+              <Autocomplete
+                multiple
+                options={jobTitles}
+                freeSolo
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      key={option}
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder={
+                      params.InputProps.startAdornment?.length
+                        ? ""
+                        : "e.g. Data Analyst"
+                    }
+                    size="small"
+                  />
+                )}
+              />
+            </FormControl>
+            <Box sx={{ position: "absolute", right: "0", top: "0" }}>
+              <CurrentPastSelect
+                currentPastValue={jobTitleCurrentPast}
+                setCurrentPastValue={setJobTitleCurrentPast}
+              />
+            </Box>
+          </Box>
+        ) : null}
 
         {/* Skills */}
         <FormControl
@@ -178,7 +273,12 @@ const SearchBar = () => {
 
         {/* Company and Current/Past Dropdown */}
         <Box sx={{ position: "relative" }}>
-          <FormControl fullWidth variant="outlined" size="small">
+          <FormControl
+            sx={styles.input}
+            fullWidth
+            variant="outlined"
+            size="small"
+          >
             <Typography sx={styles.label}>Company</Typography>
             <Autocomplete
               multiple
@@ -213,7 +313,12 @@ const SearchBar = () => {
         </Box>
 
         {/* Company Size */}
-        <FormControl fullWidth variant="outlined" size="small">
+        <FormControl
+          sx={styles.input}
+          fullWidth
+          variant="outlined"
+          size="small"
+        >
           <Typography sx={styles.label}>Company size</Typography>
           <MultiSelect
             options={companySizes}
@@ -255,7 +360,7 @@ const SearchBar = () => {
           />
         </FormControl>
 
-        {/* Gender */}
+        {/* Gender
         <FormControl
           fullWidth
           sx={styles.input}
@@ -269,10 +374,10 @@ const SearchBar = () => {
             setSelectedValues={setSelectedGender}
             placeholder="Select gender"
           />
-        </FormControl>
+        </FormControl> */}
 
         {/* Department */}
-        <FormControl
+        {/* <FormControl
           fullWidth
           sx={styles.input}
           variant="outlined"
@@ -280,8 +385,9 @@ const SearchBar = () => {
         >
           <Typography sx={styles.label}>Department</Typography>
           <OutlinedInput placeholder="e.g. Sales" />
-        </FormControl>
+        </FormControl> */}
 
+        {/* Keyword */}
         <FormControl
           fullWidth
           sx={styles.input}
@@ -300,7 +406,7 @@ const SearchBar = () => {
           size="small"
         >
           <Typography sx={styles.label}>School/Degree</Typography>
-          <OutlinedInput placeholder="e.g. UC Berkely" />
+          <OutlinedInput placeholder="e.g. UC Berkeley" />
         </FormControl>
 
         {/* Search Button */}
@@ -332,10 +438,14 @@ const styles = {
     fontWeight: "500",
     color: "rgb(63 63 70)",
   },
-  searchButton: {
-    //  ,
-    // marginTop: "10px",
+  checkboxContainer: {
+    display: "flex",
+    alignItems: "center",
   },
+  checkboxLabel: {
+    color: "rgb(63 63 70)",
+  },
+  searchButton: {},
 };
 
 export default SearchBar;
