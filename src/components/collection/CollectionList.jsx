@@ -44,7 +44,7 @@ export default function CollectionList() {
 
   const collections = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
-    listName: `List ${index + 1}`,
+    collectionName: `Collection ${index + 1}`,
     profiles: Math.floor(Math.random() * 100),
     lastUpdated: "11 Oct 2024",
     shared: Boolean(index % 2),
@@ -72,7 +72,7 @@ export default function CollectionList() {
   const handleClose = () => setAnchorEl(null);
 
   const handleEditModalOpen = () => {
-    setNewName(selectedCollection?.listName || "");
+    setNewName(selectedCollection?.collectionName || "");
     setEditModalOpen(true);
     handleClose();
   };
@@ -116,7 +116,7 @@ export default function CollectionList() {
       <DeleteConfirmationModal
         open={deleteModalOpen}
         handleClose={() => setDeleteModalOpen(false)}
-        collectionName={selectedCollection?.listName}
+        collectionName={selectedCollection?.collectionName}
         handleDelete={handleDelete}
       />
     </Box>
@@ -138,35 +138,40 @@ function CollectionTable({
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>List Name</TableCell>
-          <TableCell>Profiles</TableCell>
-          <TableCell>Last Updated</TableCell>
+          <TableCell align="center">Collection Id</TableCell>
+          <TableCell align="center">Collection Name</TableCell>
+          <TableCell align="center">Profiles</TableCell>
+          <TableCell align="center">Last Updated</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {currentCollections.map((collection) => (
           <TableRow key={collection.id}>
-            <TableCell>
-              <Box display="flex" alignItems="center">
-                <Link to="#" style={{ marginRight: 8 }}>
-                  {collection.listName}
-                </Link>
-              </Box>
+            <TableCell align="center">{collection.id}</TableCell>
+            <TableCell align="center">
+              <Link to="#" style={{ textDecoration: "none" }}>
+                {collection.collectionName}
+              </Link>
             </TableCell>
-            <TableCell>{collection.profiles}</TableCell>
-            <TableCell>{collection.lastUpdated}</TableCell>
+            <TableCell align="center">{collection.profiles}</TableCell>
+            <TableCell align="center">{collection.lastUpdated}</TableCell>
             <TableCell align="center">
               <IconButton onClick={(e) => handleMoreClick(e, collection)}>
                 <MoreVert />
               </IconButton>
               <Popover
-                // id={id}
+                id={id}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                 transformOrigin={{ vertical: "top", horizontal: "center" }}
+                sx={{
+                  "& .MuiPaper-root": {
+                    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+                  },
+                }}
               >
                 <List>
                   <ListItem
