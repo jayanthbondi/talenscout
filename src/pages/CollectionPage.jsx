@@ -10,7 +10,7 @@ const CollectionPage = () => {
       >
         <CollectionHeader />
       </Box>
-      <Box height="calc(100vh - 56px)">
+      <Box height="calc(100vh - 56px)" overflow="auto">
         <CollectionList />
       </Box>
     </Box>

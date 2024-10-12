@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  Tab,
-  Tabs,
   TextField,
   InputAdornment,
   Dialog,
@@ -13,85 +11,74 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  Select,
+  MenuItem,
+  Typography,
 } from "@mui/material";
-import { SearchOutlined, Add, Close } from "@mui/icons-material";
+import {
+  SearchOutlined,
+  Add,
+  Close,
+  ArrowBack,
+  ArrowForward,
+} from "@mui/icons-material";
 
 export default function CollectionHeader() {
-  const [activeTab, setActiveTab] = useState(0);
   const [openCreateList, setOpenCreateList] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [profilesPerPage, setProfilesPerPage] = useState(25);
+  const totalProfiles = 23017; // Dummy total profiles count
 
-  const handleTabChange = (event, newValue) => {
-    setActiveTab(newValue);
-  };
+  const totalPages = Math.ceil(totalProfiles / profilesPerPage);
 
-  const handleOpenCreateList = () => {
-    setOpenCreateList(true);
-  };
-
-  const handleCloseCreateList = () => {
-    setOpenCreateList(false);
-  };
-
+  const handleOpenCreateList = () => setOpenCreateList(true);
+  const handleCloseCreateList = () => setOpenCreateList(false);
   const handleCreateList = () => {
     setOpenCreateList(false);
     setShowSnackbar(true);
   };
+  const handleCloseSnackbar = () => setShowSnackbar(false);
 
-  const handleCloseSnackbar = () => {
-    setShowSnackbar(false);
+  const handlePageChange = (event) => {
+    setCurrentPage(parseInt(event.target.value, 10));
   };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  };
+
+  const handleProfilesPerPageChange = (event) => {
+    setProfilesPerPage(event.target.value);
+    setCurrentPage(1); // Reset to page 1 when changing profiles per page
+  };
+
+  const startIndex = (currentPage - 1) * profilesPerPage + 1;
+  const endIndex = Math.min(startIndex + profilesPerPage - 1, totalProfiles);
 
   return (
     <Box
       display="flex"
-      justifyContent="space-between"
-      alignItems="center"
+      gap={2}
       px={2}
+      py={1}
       height="100%"
+      justifyContent="space-between"
     >
-      {/* Left Section: Tabs */}
-      <Tabs
-        value={activeTab}
-        onChange={handleTabChange}
-        aria-label="Collection Tabs"
-        TabIndicatorProps={{
-          style: {
-            backgroundColor: "primary.main",
-            height: "2px",
-          },
-        }}
-        sx={{ alignSelf: "flex-end" }}
-      >
-        <Tab
-          label="People Lists"
-          sx={{
-            textTransform: "none",
-            color: activeTab === 0 ? "primary.main" : "#9e9e9e",
-            fontWeight: activeTab === 0 ? "bold" : "normal",
-          }}
-        />
-        <Tab
-          label="Company Lists"
-          sx={{
-            textTransform: "none",
-            color: activeTab === 1 ? "primary.main" : "#9e9e9e",
-            fontWeight: activeTab === 1 ? "bold" : "normal",
-          }}
-        />
-      </Tabs>
-
-      {/* Middle Section: Search */}
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        sx={{ gap: "20px" }}
+        gap={2}
       >
         <TextField
           variant="outlined"
           size="small"
-          placeholder="Search for lists or profiles"
+          placeholder="Search for lists"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -101,8 +88,6 @@ export default function CollectionHeader() {
           }}
           sx={{ width: 300 }}
         />
-
-        {/* Right Section: Create List Button */}
         <Button
           variant="contained"
           startIcon={<Add />}
@@ -112,7 +97,51 @@ export default function CollectionHeader() {
         </Button>
       </Box>
 
-      {/* Create List Modal */}
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography>
+          {startIndex} - {endIndex} of {totalProfiles} profiles
+        </Typography>
+
+        <Box display="flex" alignItems="center" gap={1}>
+          <IconButton onClick={handlePreviousPage} disabled={currentPage === 1}>
+            <ArrowBack />
+          </IconButton>
+
+          <Select
+            value={currentPage}
+            onChange={handlePageChange}
+            size="small"
+            sx={{ minWidth: 60 }}
+          >
+            {Array.from({ length: totalPages }, (_, i) => (
+              <MenuItem key={i + 1} value={i + 1}>
+                {i + 1}
+              </MenuItem>
+            ))}
+          </Select>
+
+          <IconButton
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            <ArrowForward />
+          </IconButton>
+        </Box>
+
+        <Select
+          value={profilesPerPage}
+          onChange={handleProfilesPerPageChange}
+          size="small"
+          sx={{ minWidth: 100 }}
+        >
+          {[25, 50, 100].map((size) => (
+            <MenuItem key={size} value={size}>
+              {size} per page
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
+
       <Dialog
         open={openCreateList}
         onClose={handleCloseCreateList}
@@ -153,10 +182,8 @@ export default function CollectionHeader() {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar Alert for Success */}
       <Snackbar
         open={showSnackbar}
-        // open
         autoHideDuration={5000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -164,10 +191,9 @@ export default function CollectionHeader() {
         <Alert
           onClose={handleCloseSnackbar}
           severity="success"
-          // variant="filled"
           sx={{ width: "100%" }}
         >
-          List created successfully.
+          List created successfully
         </Alert>
       </Snackbar>
     </Box>
