@@ -82,7 +82,7 @@ export const getDesignTokens = (mode) => {
     palette: {
       mode,
       primary: {
-        light: brand[200],
+        light: brand[50],
         main: brand[400],
         dark: brand[700],
         contrastText: brand[50],

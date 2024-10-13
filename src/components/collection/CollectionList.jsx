@@ -47,7 +47,6 @@ export default function CollectionList() {
     collectionName: `Collection ${index + 1}`,
     profiles: Math.floor(Math.random() * 100),
     lastUpdated: "11 Oct 2024",
-    shared: Boolean(index % 2),
   }));
 
   const indexOfLastProfile = currentPage * profilesPerPage;
@@ -132,36 +131,73 @@ function CollectionTable({
   handleClose,
 }) {
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   return (
-    <Table>
+    <Table sx={{ borderCollapse: "collapse" }}>
       <TableHead>
-        <TableRow>
-          <TableCell align="center">Collection Id</TableCell>
-          <TableCell align="center">Collection Name</TableCell>
-          <TableCell align="center">Profiles</TableCell>
-          <TableCell align="center">Last Updated</TableCell>
-          <TableCell align="center">Actions</TableCell>
+        <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
+          <TableCell align="center" sx={{ borderBottom: "2px solid #e0e0e0" }}>
+            Collection Id
+          </TableCell>
+          <TableCell align="center" sx={{ borderBottom: "2px solid #e0e0e0" }}>
+            Collection Name
+          </TableCell>
+          <TableCell align="center" sx={{ borderBottom: "2px solid #e0e0e0" }}>
+            Profiles
+          </TableCell>
+          <TableCell align="center" sx={{ borderBottom: "2px solid #e0e0e0" }}>
+            Last Updated
+          </TableCell>
+          <TableCell align="center" sx={{ borderBottom: "2px solid #e0e0e0" }}>
+            Actions
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {currentCollections.map((collection) => (
-          <TableRow key={collection.id}>
-            <TableCell align="center">{collection.id}</TableCell>
-            <TableCell align="center">
+          <TableRow
+            key={collection.id}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#f0f0f0",
+                cursor: "pointer",
+              },
+            }}
+          >
+            <TableCell
+              sx={{ borderBottom: "1px solid #e0e0e0" }}
+              align="center"
+            >
+              {collection.id}
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{ borderBottom: "1px solid #e0e0e0" }}
+            >
               <Link to="#" style={{ textDecoration: "none" }}>
                 {collection.collectionName}
               </Link>
             </TableCell>
-            <TableCell align="center">{collection.profiles}</TableCell>
-            <TableCell align="center">{collection.lastUpdated}</TableCell>
-            <TableCell align="center">
+            <TableCell
+              align="center"
+              sx={{ borderBottom: "1px solid #e0e0e0" }}
+            >
+              {collection.profiles}
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{ borderBottom: "1px solid #e0e0e0" }}
+            >
+              {collection.lastUpdated}
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{ borderBottom: "1px solid #e0e0e0" }}
+            >
               <IconButton onClick={(e) => handleMoreClick(e, collection)}>
                 <MoreVert />
               </IconButton>
               <Popover
-                id={id}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
