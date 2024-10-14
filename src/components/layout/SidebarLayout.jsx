@@ -22,7 +22,7 @@ import { useTheme } from "@mui/material/styles";
 
 const drawerWidth = 140;
 
-const Sidebar = () => {
+const SidebarLayout = () => {
   const [open, setOpen] = useState(true);
   const theme = useTheme();
 
@@ -157,4 +157,4 @@ const menuItems = [
   { path: "/logout", icon: ExitToApp, label: "Logout" },
 ];
 
-export default Sidebar;
+export default SidebarLayout;

@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
@@ -44,9 +43,5 @@ function InfoMobile({ totalPrice }) {
     </div>
   );
 }
-
-InfoMobile.propTypes = {
-  totalPrice: PropTypes.string.isRequired,
-};
 
 export default InfoMobile;

@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -100,13 +99,5 @@ function TemplateFrame({
     </ThemeProvider>
   );
 }
-
-TemplateFrame.propTypes = {
-  children: PropTypes.node,
-  mode: PropTypes.oneOf(["dark", "light"]).isRequired,
-  showCustomTheme: PropTypes.bool.isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
-  toggleCustomTheme: PropTypes.func.isRequired,
-};
 
 export default TemplateFrame;

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import LoginPage from "./pages/LoginPage";
 import SearchPage from "./pages/SearchPage";
 import CollectionPage from "./pages/CollectionPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -15,6 +16,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Layout>
           <Routes>
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/collection" element={<CollectionPage />} />
             <Route path="/profile" element={<ProfilePage />} />
