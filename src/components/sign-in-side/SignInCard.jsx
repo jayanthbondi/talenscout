@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MuiCard from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
-// import Divider from "@mui/material/Divider";
+import Divider from "@mui/material/Divider";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "./ForgotPassword";
 // import { SitemarkIcon } from "./CustomIcons";
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
+import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -164,25 +164,25 @@ export default function SignInCard() {
         >
           Sign in
         </Button>
-        {/* <Typography sx={{ textAlign: 'center' }}>
-          Don&apos;t have an account?{' '}
+        <Typography sx={{ textAlign: "center" }}>
+          Don&apos;t have an account?{" "}
           <span>
             <Link
               href="/material-ui/getting-started/templates/sign-in/"
               variant="body2"
-              sx={{ alignSelf: 'center' }}
+              sx={{ alignSelf: "center" }}
             >
               Sign up
             </Link>
           </span>
-        </Typography> */}
+        </Typography>
       </Box>
-      {/* <Divider>or</Divider>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Divider>or</Divider>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Button
           fullWidth
           variant="outlined"
-          onClick={() => alert('Sign in with Google')}
+          onClick={() => alert("Sign in with Google")}
           startIcon={<GoogleIcon />}
         >
           Sign in with Google
@@ -190,12 +190,12 @@ export default function SignInCard() {
         <Button
           fullWidth
           variant="outlined"
-          onClick={() => alert('Sign in with Facebook')}
+          onClick={() => alert("Sign in with Facebook")}
           startIcon={<FacebookIcon />}
         >
           Sign in with Facebook
         </Button>
-      </Box> */}
+      </Box>
     </Card>
   );
 }
